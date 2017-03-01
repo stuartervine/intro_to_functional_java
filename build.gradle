@@ -1,0 +1,16 @@
+apply plugin: "application"
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url "http://repo.bodar.com/"
+    }
+}
+
+dependencies {
+    compile "com.googlecode.totallylazy:totallylazy:2.258"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+}
