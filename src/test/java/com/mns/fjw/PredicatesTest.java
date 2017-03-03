@@ -1,15 +1,13 @@
 package com.mns.fjw;
 
-import static com.googlecode.totallylazy.Sequences.sequence;
-import static com.googlecode.totallylazy.matchers.IterableMatcher.hasExactly;
-import static com.googlecode.totallylazy.matchers.IterableMatcher.isEmpty;
 import static com.mns.fjw.Stacker.Shape.shape;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-import com.googlecode.totallylazy.Sequence;
 import org.junit.Test;
 
 import java.util.List;
@@ -39,11 +37,11 @@ public class PredicatesTest {
         List<String> names = asList("bob", "fred", "john");
         assertThat(
                 names.stream().filter(alwaysTrue).collect(toList()),
-                hasExactly("bob", "fred", "john")
+                contains("bob", "fred", "john")
         );
         assertThat(
                 names.stream().filter(alwaysFalse).collect(toList()),
-                isEmpty()
+                emptyIterable()
         );
     }
 
@@ -58,38 +56,7 @@ public class PredicatesTest {
         Predicate<String> lengthIsFourOrMore = string -> false;
         assertThat(
                 names.stream().filter(lengthIsFourOrMore).collect(toList()),
-                hasExactly("fred", "john doe")
-        );
-    }
-
-    /*
-    Totally Lazy equivalents...
-    */
-    @Test
-    public void totallyLazyPredicate_exercise2() {
-        /*
-        Sequences are lazy collections that have a number of functional methods available from the get go.
-        Why does Stuart like them more than streams?
-        Compare the following:
-         */
-
-        List<String> listOfNames = asList("bob", "john", "wilma");
-        assertThat(
-                listOfNames.stream().filter(n -> true).collect(toList()),
-                hasExactly("bob", "john", "wilma")
-        );
-
-        Sequence<String> sequenceOfNames = sequence("bob", "john", "wilma");
-        assertThat(
-                sequenceOfNames.filter(n -> true),
-                hasExactly("bob", "john", "wilma")
-        );
-        // WOW - what happened to the stream and collect methods?
-
-        // Try your length is 4 or more filter:
-        assertThat(
-                sequenceOfNames.filter(n -> true), //replace with your four or more filter
-                hasExactly("john", "wilma")
+                contains("fred", "john doe")
         );
     }
 
@@ -120,7 +87,7 @@ public class PredicatesTest {
         Person john = new Person("John", "Aberdeen", "M");
         Person wilma = new Person("Wilma", "London", "F");
         Person jackie = new Person("Jackie", "Southampton", "F");
-        Sequence<Person> people = sequence(
+        List<Person> people = asList(
                 bob,
                 john,
                 wilma,
@@ -128,35 +95,35 @@ public class PredicatesTest {
         );
 
         // write a predicate to find all males.
-        com.googlecode.totallylazy.predicates.Predicate<Person> males = p -> false;
+        Predicate<Person> males = p -> false;
         assertThat(
-                people.filter(males),
-                hasExactly(bob, john)
+                people.stream().filter(males).collect(toList()),
+                contains(bob, john)
         );
 
         // write a predicate to find people living in London.
-        com.googlecode.totallylazy.predicates.Predicate<Person> livingInLondon = p -> false;
+        Predicate<Person> livingInLondon = p -> false;
         assertThat(
-                people.filter(livingInLondon),
-                hasExactly(bob, wilma)
+                people.stream().filter(livingInLondon).collect(toList()),
+                contains(bob, wilma)
         );
 
         // any idea how to find males living in london?
         assertThat(
-                people,
-                hasExactly(bob)
+                people.stream().filter(p -> true).collect(toList()),
+                contains(bob)
         );
 
         // how about females living outside of london?
         assertThat(
-                people,
-                hasExactly(jackie)
+                people.stream().filter(p -> true).collect(toList()),
+                contains(jackie)
         );
     }
 
     @Test
     public void nonFunctionalToFunctionalExercise() {
-        Sequence<Stacker.Shape> shapes = sequence(
+        List<Stacker.Shape> shapes = asList(
                 shape(1, 2, true),
                 shape(10, 2, true),
                 shape(5, 4, true),

@@ -1,12 +1,13 @@
 package com.mns.fjw;
 
-import static com.googlecode.totallylazy.Sequences.sequence;
 import static com.mns.fjw.Stacker.Shape.shape;
+import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-import com.googlecode.totallylazy.Sequence;
 import org.junit.Test;
+
+import java.util.List;
 
 public class ReduceTest {
     /*
@@ -15,7 +16,7 @@ public class ReduceTest {
      */
     @Test
     public void simpleReduceExamples() {
-        Sequence<Integer> numbers = sequence(1, 2, 3);
+        List<Integer> numbers = asList(1, 2, 3);
 
         // traditional.
         int accumulator = 0;
@@ -25,13 +26,16 @@ public class ReduceTest {
         assertThat(accumulator, is(6));
 
         // functionally using a reduce method:
-        assertThat(numbers.reduce((acc, i) -> acc + i), is(6));
+        assertThat(
+                numbers.stream().reduce((acc, i) -> acc + i),
+                is(6)
+        );
     }
 
     @Test
     public void nonFunctionalToFunctionalExercise() {
         //Can we apply the reduction to our example?
-        Sequence<Stacker.Shape> shapes = sequence(
+        List<Stacker.Shape> shapes = asList(
                 shape(1, 2, true),
                 shape(10, 2, true),
                 shape(5, 4, true),
@@ -41,7 +45,7 @@ public class ReduceTest {
         );
 
         Stacker stacker = new Stacker(shapes);
-        assertThat(stacker.largeStackableItemsArea(), is((10*2) + (5*4)));
-        assertThat(stacker.smallStackableItemsArea(), is((1*2) + (3*3)));
+        assertThat(stacker.largeStackableItemsArea(), is((10 * 2) + (5 * 4)));
+        assertThat(stacker.smallStackableItemsArea(), is((1 * 2) + (3 * 3)));
     }
 }

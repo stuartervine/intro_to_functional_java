@@ -1,11 +1,11 @@
 package com.mns.fjw;
 
-import com.googlecode.totallylazy.Sequence;
+import java.util.List;
 
 public class Stacker {
-    private final Sequence<Shape> shapes;
+    private final List<Shape> shapes;
 
-    public Stacker(Sequence<Shape> shapes) {
+    public Stacker(List<Shape> shapes) {
         this.shapes = shapes;
     }
 

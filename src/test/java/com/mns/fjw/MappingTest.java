@@ -1,13 +1,12 @@
 package com.mns.fjw;
 
-import static com.googlecode.totallylazy.Sequences.sequence;
-import static com.googlecode.totallylazy.matchers.IterableMatcher.hasExactly;
 import static com.mns.fjw.Stacker.Shape.shape;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-import com.googlecode.totallylazy.Sequence;
-import com.googlecode.totallylazy.Strings;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ public class MappingTest {
     @Test
     public void simpleMappingExamples() {
         //Let's start with a collection of cities:
-        Sequence<String> cities =
-                sequence("London", "Barcelona", "New York", "Los Angeles");
+        List<String> cities =
+                asList("London", "Barcelona", "New York", "Los Angeles");
 
         //How could we convert all the names to uppercase?
         for (String city : cities) {
@@ -32,15 +31,15 @@ public class MappingTest {
         // The city.toUpperCase is the transformation or mapper in this cases.
         // To do this in a functional fashion you use map.
         assertThat(
-                cities.map(city -> city.toUpperCase()),
-                hasExactly("LONDON", "BARCELONA", "NEW YORK", "LOS ANGELES")
+                cities.stream().map(city -> city.toUpperCase()).collect(toList()),
+                contains("LONDON", "BARCELONA", "NEW YORK", "LOS ANGELES")
         );
 
         //Why does IntelliJ highlight the city.toUpperCase funny? Because you can express this using a
         // METHOD REFERENCE:
         assertThat(
-                cities.map(String::toUpperCase), // <- ooohhh shiny.
-                hasExactly("LONDON", "BARCELONA", "NEW YORK", "LOS ANGELES")
+                cities.stream().map(String::toUpperCase).collect(toList()), // <- ooohhh shiny.
+                contains("LONDON", "BARCELONA", "NEW YORK", "LOS ANGELES")
         );
     }
 
@@ -55,7 +54,7 @@ public class MappingTest {
                 "wilma, belfast, wilma@example.com";
 
         // With some TL love, we can convert this to a sequence of lines by doing the following:
-        Sequence<String> lines = Strings.lines(csv);
+        List<String> lines = asList(csv.split("\\n"));
 
         // Now how would we convert the lines into names?
         // Traditionally:
@@ -63,18 +62,18 @@ public class MappingTest {
         for (String line : lines) {
             names.add(line.split(",")[0]);
         }
-        assertThat(names, hasExactly("john", "bob", "wilma"));
+        assertThat(names, contains("john", "bob", "wilma"));
 
         //How would you do it using a map & lambda?
         assertThat(
-                lines.map(line -> line),
-                hasExactly("john", "bob", "wilma")
+                lines.stream().map(line -> line).collect(toList()),
+                contains("john", "bob", "wilma")
         );
     }
 
     @Test
     public void nonFunctionalToFunctionalExercise() {
-        Sequence<Stacker.Shape> shapes = sequence(
+        List<Stacker.Shape> shapes = asList(
                 shape(1, 2, true),
                 shape(10, 2, true),
                 shape(5, 4, true),
