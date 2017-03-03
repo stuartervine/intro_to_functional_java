@@ -53,7 +53,7 @@ public class MappingTest {
                 "bob, birmingham, bob@example.com\n" +
                 "wilma, belfast, wilma@example.com";
 
-        // With some TL love, we can convert this to a sequence of lines by doing the following:
+        // We can convert the string above into a list of lines using the following:
         List<String> lines = asList(csv.split("\\n"));
 
         // Now how would we convert the lines into names?
