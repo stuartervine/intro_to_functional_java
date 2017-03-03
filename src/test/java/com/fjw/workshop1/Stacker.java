@@ -1,4 +1,4 @@
-package com.mns.fjw;
+package com.fjw.workshop1;
 
 import java.util.List;
 

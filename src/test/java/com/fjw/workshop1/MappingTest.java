@@ -1,6 +1,5 @@
-package com.mns.fjw;
+package com.fjw.workshop1;
 
-import static com.mns.fjw.Stacker.Shape.shape;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -74,12 +73,12 @@ public class MappingTest {
     @Test
     public void nonFunctionalToFunctionalExercise() {
         List<Stacker.Shape> shapes = asList(
-                shape(1, 2, true),
-                shape(10, 2, true),
-                shape(5, 4, true),
-                shape(3, 3, true),
-                shape(1, 2, false),
-                shape(1, 2, false)
+                Stacker.Shape.shape(1, 2, true),
+                Stacker.Shape.shape(10, 2, true),
+                Stacker.Shape.shape(5, 4, true),
+                Stacker.Shape.shape(3, 3, true),
+                Stacker.Shape.shape(1, 2, false),
+                Stacker.Shape.shape(1, 2, false)
         );
         /*
         Can you convert the internals of stacker to use maps & lambdas?

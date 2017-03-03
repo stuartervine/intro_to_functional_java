@@ -1,6 +1,5 @@
-package com.mns.fjw;
+package com.fjw.workshop1;
 
-import static com.mns.fjw.Stacker.Shape.shape;
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -36,12 +35,12 @@ public class ReduceTest {
     public void nonFunctionalToFunctionalExercise() {
         //Can we apply the reduction to our example?
         List<Stacker.Shape> shapes = asList(
-                shape(1, 2, true),
-                shape(10, 2, true),
-                shape(5, 4, true),
-                shape(3, 3, true),
-                shape(1, 2, false),
-                shape(1, 2, false)
+                Stacker.Shape.shape(1, 2, true),
+                Stacker.Shape.shape(10, 2, true),
+                Stacker.Shape.shape(5, 4, true),
+                Stacker.Shape.shape(3, 3, true),
+                Stacker.Shape.shape(1, 2, false),
+                Stacker.Shape.shape(1, 2, false)
         );
 
         Stacker stacker = new Stacker(shapes);
