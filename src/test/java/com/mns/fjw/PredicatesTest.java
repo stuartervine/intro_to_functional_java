@@ -49,7 +49,7 @@ public class PredicatesTest {
 
     @Test
     public void javaStreamPredicate_exercise1() {
-        List<String> names = asList("bob", "fred", "john");
+        List<String> names = asList("bob", "fred", "john doe");
 
         /*
         Great, how about doing something meaningful with a predicate?
@@ -58,7 +58,7 @@ public class PredicatesTest {
         Predicate<String> lengthIsFourOrMore = string -> false;
         assertThat(
                 names.stream().filter(lengthIsFourOrMore).collect(toList()),
-                hasExactly("fred", "john")
+                hasExactly("fred", "john doe")
         );
     }
 
