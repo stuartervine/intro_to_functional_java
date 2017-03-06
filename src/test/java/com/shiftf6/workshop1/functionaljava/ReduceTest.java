@@ -1,4 +1,4 @@
-package com.fjw.workshop1;
+package com.shiftf6.workshop1.functionaljava;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
@@ -34,17 +34,18 @@ public class ReduceTest {
     @Test
     public void nonFunctionalToFunctionalExercise() {
         //Can we apply the reduction to our example?
-        List<Stacker.Shape> shapes = asList(
-                Stacker.Shape.shape(1, 2, true),
-                Stacker.Shape.shape(10, 2, true),
-                Stacker.Shape.shape(5, 4, true),
-                Stacker.Shape.shape(3, 3, true),
-                Stacker.Shape.shape(1, 2, false),
-                Stacker.Shape.shape(1, 2, false)
+        List<Shape> shapes = asList(
+                Shape.shape(1, 2, true),
+                Shape.shape(10, 2, true),
+                Shape.shape(5, 4, true),
+                Shape.shape(3, 3, true),
+                Shape.shape(1, 2, false),
+                Shape.shape(1, 2, false)
         );
 
-        Stacker stacker = new Stacker(shapes);
-        assertThat(stacker.largeStackableItemsArea(), is((10 * 2) + (5 * 4)));
-        assertThat(stacker.smallStackableItemsArea(), is((1 * 2) + (3 * 3)));
+        Stacker stacker = new Stacker();
+        assertThat(stacker.totalAreaOfShapes(shapes), is(55));
+        assertThat(stacker.stackableItemsArea(shapes), is((1*2) + (10*2) + (5*4) + (3*3)));
+        assertThat(stacker.unstackableItemsArea(shapes), is((1*2) + (1*2) ));
     }
 }
