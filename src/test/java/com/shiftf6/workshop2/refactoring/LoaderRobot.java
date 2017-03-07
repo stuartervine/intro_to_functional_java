@@ -7,12 +7,14 @@ import java.util.List;
 
 public class LoaderRobot {
 
-    private final List<Integer> loadingBays;
-    private List<Integer> spaceLeftInLoadingBays;
+    private final LoadingBayRepository loadingBayRepository;
 
-    public LoaderRobot(List<Integer> loadingBays) {
-        this.loadingBays = loadingBays;
-        this.spaceLeftInLoadingBays = new ArrayList<>(loadingBays);
+    public LoaderRobot(List<Integer> loadingBays, LoadingBayRepository loadingBayRepository) {
+        this.loadingBayRepository = loadingBayRepository;
+        for (Integer loadingBay : loadingBays) {
+            loadingBayRepository.addLoadingBay(loadingBay);
+        }
+        loadingBayRepository.afterBaysSetInitialize();
     }
 
     public List<Integer> load(List<Shape> shapes) throws CannotFitIntoLoadingBaysException {
@@ -22,16 +24,17 @@ public class LoaderRobot {
 
         ArrayList<Shape> stackableShapes = processUnstackables(shapes);
         processStackables(stackableShapes);
-        return spaceLeftInLoadingBays;
+        return loadingBayRepository.allBays();
     }
 
     private void processStackables(ArrayList<Shape> stackableShapes) {
-        for (int i = 0; i < loadingBays.size(); i++) {
-            if (spaceLeftInLoadingBays.get(i) == loadingBays.get(i)) {
+        List<Integer> allBays = loadingBayRepository.allBays();
+        for (int i = 0; i < allBays.size(); i++) {
+            if (loadingBayRepository.isEmpty(i)) {
                 //fill it up.
-                while(!stackableShapes.isEmpty() && stackableShapes.get(0).width * stackableShapes.get(0).height <= spaceLeftInLoadingBays.get(i)) {
+                while(!stackableShapes.isEmpty() && stackableShapes.get(0).width * stackableShapes.get(0).height <= allBays.get(i)) {
                     Shape shapeToLoad = stackableShapes.remove(0);
-                    spaceLeftInLoadingBays.set(i, spaceLeftInLoadingBays.get(i) - (shapeToLoad.width * shapeToLoad.height));
+                    loadingBayRepository.loadBay(i, allBays.get(i) - (shapeToLoad.width * shapeToLoad.height));
                 }
             }
         }
@@ -42,10 +45,11 @@ public class LoaderRobot {
         //handle unstackables
         for (Shape shape : shapes) {
             if (!shape.stackable) {
-                for (int i = 0; i < loadingBays.size(); i++) {
-                    if (spaceLeftInLoadingBays.get(i) == loadingBays.get(i)) {
+                List<Integer> allBays = loadingBayRepository.allBays();
+                for (int i = 0; i < allBays.size(); i++) {
+                    if (loadingBayRepository.isEmpty(i)) {
                         //empty loading bay, load it.
-                        spaceLeftInLoadingBays.set(i, spaceLeftInLoadingBays.get(i) - shape.width * shape.height);
+                        loadingBayRepository.loadBay(i, allBays.get(i) - shape.width * shape.height);
                     }
                 }
             } else {
@@ -65,14 +69,15 @@ public class LoaderRobot {
 
     private int totalSpaceLeftInLoadingBays() {
         int totalSpaceLeft = 0;
-        for (Integer spaceLeftInLoadingBay : spaceLeftInLoadingBays) {
+        for (Integer spaceLeftInLoadingBay : loadingBayRepository.allBays()) {
             totalSpaceLeft = totalSpaceLeft + spaceLeftInLoadingBay;
         }
         return totalSpaceLeft;
     }
 
     public List<Integer> trashAll() {
-        spaceLeftInLoadingBays = loadingBays;
-        return spaceLeftInLoadingBays;
+        loadingBayRepository.deleteAllTemporaryLoadingBays();
+        loadingBayRepository.resetTempLoadingBaysFromOriginals();
+        return loadingBayRepository.allBays();
     }
 }

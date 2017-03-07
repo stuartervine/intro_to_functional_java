@@ -16,7 +16,7 @@ public class LoaderRobotTest {
     @Test
     public void canLoadSingleShapeIntoLoadingBayOfCorrectSize() throws CannotFitIntoLoadingBaysException {
         List<Shape> shapes = asList(shape(10, 10, true));
-        LoaderRobot loaderRobot = new LoaderRobot(asList(100));
+        LoaderRobot loaderRobot = new LoaderRobot(asList(100), new LoadingBayRepository());
         List<Integer> loadedBays = loaderRobot.load(shapes);
         assertThat(loadedBays, contains(0));
     }
@@ -24,7 +24,7 @@ public class LoaderRobotTest {
     @Test
     public void errorsIfThereIsNotEnoughSpaceInLoadingBay() {
         List<Shape> shapes = asList(shape(11, 10, true));
-        LoaderRobot loaderRobot = new LoaderRobot(asList(100));
+        LoaderRobot loaderRobot = new LoaderRobot(asList(100), new LoadingBayRepository());
         try {
             loaderRobot.load(shapes);
             fail("Should throw cannot fit exception");
@@ -36,7 +36,7 @@ public class LoaderRobotTest {
     @Test
     public void trashAllEmptiesOutLoadingBays() throws CannotFitIntoLoadingBaysException {
         List<Shape> shapes = asList(shape(10, 10, true));
-        LoaderRobot loaderRobot = new LoaderRobot(asList(100));
+        LoaderRobot loaderRobot = new LoaderRobot(asList(100), new LoadingBayRepository());
         loaderRobot.load(shapes);
         List<Integer> loadedBays = loaderRobot.trashAll();
         assertThat(loadedBays, contains(100));
@@ -48,7 +48,7 @@ public class LoaderRobotTest {
                 shape(1, 1, false),
                 shape(1, 1, false)
         );
-        LoaderRobot loaderRobot = new LoaderRobot(asList(100, 100));
+        LoaderRobot loaderRobot = new LoaderRobot(asList(100, 100), new LoadingBayRepository());
         List<Integer> loadedBays = loaderRobot.load(shapes);
         assertThat(loadedBays, contains(99, 99));
     }
@@ -60,7 +60,7 @@ public class LoaderRobotTest {
                 shape(1, 1, true),
                 shape(1, 1, true)
         );
-        LoaderRobot loaderRobot = new LoaderRobot(asList(2, 100));
+        LoaderRobot loaderRobot = new LoaderRobot(asList(2, 100), new LoadingBayRepository());
         List<Integer> loadedBays = loaderRobot.load(shapes);
         assertThat(loadedBays, contains(0, 99));
     }

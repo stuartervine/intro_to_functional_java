@@ -15,7 +15,4 @@ public class Shape {
         this.stackable = stackable;
     }
 
-    public int area() {
-        return width * height;
-    }
 }
