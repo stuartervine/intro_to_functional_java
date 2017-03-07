@@ -16,18 +16,28 @@ public class LoaderRobot {
     }
 
     public List<Integer> load(List<Shape> shapes) throws CannotFitIntoLoadingBaysException {
-        int totalSpaceLeft = 0;
-        for (Integer spaceLeftInLoadingBay : spaceLeftInLoadingBays) {
-            totalSpaceLeft = totalSpaceLeft + spaceLeftInLoadingBay;
-        }
-
-        int totalArea = 0;
-        for (Shape shape : shapes) {
-            totalArea = totalArea + shape.width * shape.height;
-        }
-
+        int totalSpaceLeft = totalSpaceLeftInLoadingBays();
+        int totalArea = totalAreaOfShapesToLoad(shapes);
         if(totalArea > totalSpaceLeft) throw new CannotFitIntoLoadingBaysException();
 
+        ArrayList<Shape> stackableShapes = processUnstackables(shapes);
+        processStackables(stackableShapes);
+        return spaceLeftInLoadingBays;
+    }
+
+    private void processStackables(ArrayList<Shape> stackableShapes) {
+        for (int i = 0; i < loadingBays.size(); i++) {
+            if (spaceLeftInLoadingBays.get(i) == loadingBays.get(i)) {
+                //fill it up.
+                while(!stackableShapes.isEmpty() && stackableShapes.get(0).width * stackableShapes.get(0).height <= spaceLeftInLoadingBays.get(i)) {
+                    Shape shapeToLoad = stackableShapes.remove(0);
+                    spaceLeftInLoadingBays.set(i, spaceLeftInLoadingBays.get(i) - (shapeToLoad.width * shapeToLoad.height));
+                }
+            }
+        }
+    }
+
+    private ArrayList<Shape> processUnstackables(List<Shape> shapes) {
         ArrayList<Shape> stackableShapes = new ArrayList<>();
         //handle unstackables
         for (Shape shape : shapes) {
@@ -42,19 +52,23 @@ public class LoaderRobot {
                 stackableShapes.add(shape);
             }
         }
+        return stackableShapes;
+    }
 
-        //handle stackables
-        //find first empty loading bay.
-        for (int i = 0; i < loadingBays.size(); i++) {
-            if (spaceLeftInLoadingBays.get(i) == loadingBays.get(i)) {
-                //fill it up.
-                while(!stackableShapes.isEmpty() && stackableShapes.get(0).width * stackableShapes.get(0).height <= spaceLeftInLoadingBays.get(i)) {
-                    Shape shapeToLoad = stackableShapes.remove(0);
-                    spaceLeftInLoadingBays.set(i, spaceLeftInLoadingBays.get(i) - (shapeToLoad.width * shapeToLoad.height));
-                }
-            }
+    private int totalAreaOfShapesToLoad(List<Shape> shapes) {
+        int totalArea = 0;
+        for (Shape shape : shapes) {
+            totalArea = totalArea + shape.width * shape.height;
         }
-        return spaceLeftInLoadingBays;
+        return totalArea;
+    }
+
+    private int totalSpaceLeftInLoadingBays() {
+        int totalSpaceLeft = 0;
+        for (Integer spaceLeftInLoadingBay : spaceLeftInLoadingBays) {
+            totalSpaceLeft = totalSpaceLeft + spaceLeftInLoadingBay;
+        }
+        return totalSpaceLeft;
     }
 
     public List<Integer> trashAll() {
