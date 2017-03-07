@@ -1,0 +1,9 @@
+- Don't expose your innards:
+-- There are a lot of area calculations going on.
+-- LoadingBayRepository has lots of multi-calls.
+
+- Proper OO modelling:
+-- LoadingBayRepository contains two lists,
+   one to represent the total area available,
+   and the other to represent the remaining space.
+   Encapsulate these into a single list of LoadingBay objects.
