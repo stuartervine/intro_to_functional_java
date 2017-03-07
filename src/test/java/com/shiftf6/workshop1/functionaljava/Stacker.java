@@ -16,7 +16,9 @@ public class Stacker {
         int area = 0;
         for (Shape shape : shapes) {
             if (shape.stackable) {
-                area += shape.width * shape.height;
+                if (shape.width * shape.height <= 15) {
+                    area += shape.width * shape.height;
+                }
             }
         }
         return area;
@@ -25,11 +27,10 @@ public class Stacker {
     public int unstackableItemsArea(List<Shape> shapes) {
         int area = 0;
         for (Shape shape : shapes) {
-            if (!shape.stackable) {
-                area += shape.width * shape.height;
+            if(!shape.stackable || shape.width * shape.height > 15) {
+                    area += shape.width * shape.height;
             }
         }
         return area;
     }
-
 }

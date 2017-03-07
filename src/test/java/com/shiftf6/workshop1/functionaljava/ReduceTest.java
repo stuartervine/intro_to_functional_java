@@ -45,7 +45,7 @@ public class ReduceTest {
 
         Stacker stacker = new Stacker();
         assertThat(stacker.totalAreaOfShapes(shapes), is(55));
-        assertThat(stacker.stackableItemsArea(shapes), is((1*2) + (10*2) + (5*4) + (3*3)));
-        assertThat(stacker.unstackableItemsArea(shapes), is((1*2) + (1*2) ));
+        assertThat(stacker.stackableItemsArea(shapes), is((1*2) + (3*3)));
+        assertThat(stacker.unstackableItemsArea(shapes), is((1*2) + (10*2) + (5*4) + (1*2)));
     }
 }
