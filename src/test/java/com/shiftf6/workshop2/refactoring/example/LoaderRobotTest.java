@@ -1,4 +1,4 @@
-package com.shiftf6.workshop2.refactoring;
+package com.shiftf6.workshop2.refactoring.example;
 
 import static com.shiftf6.workshop1.functionaljava.Shape.shape;
 import static java.util.Arrays.asList;
