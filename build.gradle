@@ -13,4 +13,5 @@ dependencies {
 
     testCompile "junit:junit:4.12"
     testCompile "org.hamcrest:hamcrest-all:1.3"
+    testCompile "com.h2database:h2:1.4.193"
 }
