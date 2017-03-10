@@ -1,4 +1,4 @@
-package com.shiftf6.workshop2.refactoring.b_breaking_up_code;
+package com.shiftf6.workshop2.refactoring.b_the_big_class;
 
 import static java.lang.String.format;
 import static java.util.Comparator.comparing;

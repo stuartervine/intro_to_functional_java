@@ -1,4 +1,4 @@
-package com.shiftf6.workshop2.refactoring.c_databases_get_involved;
+package com.shiftf6.workshop2.refactoring.a_mutability_is_bad.prices;
 
 import static com.googlecode.totallylazy.Sequences.sequence;
 

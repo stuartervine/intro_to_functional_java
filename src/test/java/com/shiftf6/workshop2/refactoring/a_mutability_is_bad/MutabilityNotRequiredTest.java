@@ -1,8 +1,12 @@
-package com.shiftf6.workshop2.refactoring.c_databases_get_involved;
+package com.shiftf6.workshop2.refactoring.a_mutability_is_bad;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+import com.shiftf6.workshop2.refactoring.a_mutability_is_bad.prices.DatabaseMigrator;
+import com.shiftf6.workshop2.refactoring.a_mutability_is_bad.prices.JdbcTemplate;
+import com.shiftf6.workshop2.refactoring.a_mutability_is_bad.prices.Price;
+import com.shiftf6.workshop2.refactoring.a_mutability_is_bad.prices.PriceRepository;
 import org.junit.Before;
 import org.junit.Test;
 

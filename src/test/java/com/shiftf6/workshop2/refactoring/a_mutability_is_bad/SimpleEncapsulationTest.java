@@ -1,4 +1,4 @@
-package com.shiftf6.workshop2.refactoring.a_encapsulation;
+package com.shiftf6.workshop2.refactoring.a_mutability_is_bad;
 
 import static java.lang.String.format;
 import static org.hamcrest.core.Is.is;
