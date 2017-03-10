@@ -45,7 +45,7 @@ public class PredicatesTest {
     }
 
     @Test
-    public void javaStreamPredicate_exercise1() {
+    public void predicates_exercise1() {
         List<String> names = asList("bob", "fred", "john doe");
 
         /*
@@ -70,22 +70,22 @@ public class PredicatesTest {
         class Person {
             public final String name;
             public final String livesInCity;
-            public final String sex;
+            public final String smokes;
 
-            public Person(String name, String livesInCity, String sex) {
+            public Person(String name, String livesInCity, String smokes) {
                 this.name = name;
                 this.livesInCity = livesInCity;
-                this.sex = sex; // no yes pleases - thankyou!
+                this.smokes = smokes;
             }
 
             public String toString() { return "Person: " + name; }
         }
 
         // and we have a collection of these...
-        Person bob = new Person("Bob", "London", "M");
-        Person john = new Person("John", "Aberdeen", "M");
-        Person wilma = new Person("Wilma", "London", "F");
-        Person jackie = new Person("Jackie", "Southampton", "F");
+        Person bob = new Person("Bob", "London", "Y");
+        Person john = new Person("John", "Aberdeen", "Y");
+        Person wilma = new Person("Wilma", "London", "N");
+        Person jackie = new Person("Jackie", "Southampton", "N");
         List<Person> people = asList(
                 bob,
                 john,
@@ -93,7 +93,7 @@ public class PredicatesTest {
                 jackie
         );
 
-        // write a predicate to find all males.
+        // write a predicate to find all smokers.
         Predicate<Person> males = p -> false;
         assertThat(
                 people.stream().filter(males).collect(toList()),
@@ -107,13 +107,13 @@ public class PredicatesTest {
                 contains(bob, wilma)
         );
 
-        // any idea how to find males living in london?
+        // any idea how to find smokers living in london?
         assertThat(
                 people.stream().filter(p -> true).collect(toList()),
                 contains(bob)
         );
 
-        // how about females living outside of london?
+        // how about non-smokers living outside of london?
         assertThat(
                 people.stream().filter(p -> true).collect(toList()),
                 contains(jackie)
