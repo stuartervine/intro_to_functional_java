@@ -60,7 +60,7 @@ public class PredicatesTest {
     }
 
     @Test
-    public void backToPredicates_exercise3() {
+    public void predicates_exercise2() {
         /*
         Sweet... how about doing something with an object, can we filter those using a predicate too?
         We'll use sequences going forward, but you can replace them with stream().filter(...).collects on
