@@ -36,6 +36,11 @@ public class SimpleEncapsulationTest {
         }
     }
 
+    private void checkForBadItems(Item item) {
+        item.setPrice(6);
+        item.setDescription("I can do whatever I want to your object behind your back");
+    }
+
     class Basket {
         List<Item> items = new ArrayList<>();
     }
@@ -61,6 +66,16 @@ public class SimpleEncapsulationTest {
         Item apple = new Item();
         apple.setDescription("Apple");
 
+        assertThat(apple.toString(), is("Apple @ 12"));
+    }
+
+    @Test
+    public void whyMutabilityIsAwful() {
+        Item apple = new Item();
+        apple.setDescription("Apple");
+        apple.setPrice(12);
+
+        checkForBadItems(apple);
         assertThat(apple.toString(), is("Apple @ 12"));
     }
 
