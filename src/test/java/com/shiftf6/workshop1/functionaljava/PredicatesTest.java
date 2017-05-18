@@ -63,8 +63,6 @@ public class PredicatesTest {
     public void predicates_exercise2() {
         /*
         Sweet... how about doing something with an object, can we filter those using a predicate too?
-        We'll use sequences going forward, but you can replace them with stream().filter(...).collects on
-        Lists if you want.
         Imagine we have a class: Person
          */
         class Person {
